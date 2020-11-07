@@ -3,7 +3,7 @@ import PatientRecord from "../pages/PatientRecord";
 
 export const routePaths = {
   dashboard: "/dashboard",
-  patientRecord:'/patient-record'
+  patientRecord: "/patient-record"
 };
 
 export const authRoutes = [
@@ -27,8 +27,7 @@ export const authRoutes = [
     url: "/",
     exact: true,
     main: Dashboard
-  }
-  // eslint-disable-line
+  } // eslint-disable-line
 ];
 
 export const unAuthRoutes = [];
