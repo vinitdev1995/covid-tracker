@@ -1,0 +1,39 @@
+@import "variables";
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+body {
+  padding-right: 0 !important;
+  font-family: Roboto;
+}
+
+.d-flex{
+  display: flex;
+}
+
+.flex-row{
+  flex-direction: row;
+}
+
+.flex-column{
+  flex-direction: column;
+}
+
+.text-blue{
+  color: $color_link;
+}
+
+.mb-20{
+  margin-bottom: $m_20;
+}
+
+.mt-20{
+  margin-top: $m_20;
+}
+
+.mt-30{
+  margin-top: $m_30;
+}
+
+.ml-20{
+  margin-left: $m_20;
+}

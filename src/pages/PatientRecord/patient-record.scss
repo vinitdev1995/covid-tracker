@@ -1,0 +1,69 @@
+.ant-form-item-label {
+  color: midnightblue !important;
+}
+.ant-form-item-control-input {
+  outline: 0 !important;
+  border-width: 0 0 2px !important;
+}
+
+.ant-layout{
+  background: #FFFFFF !important;
+}
+.ant-input:hover{
+  border-color : black !important;
+}
+.ant-input{
+  border: none !important;
+  border-bottom: 1px solid black !important;
+  outline: 0 !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+}
+.ant-form-item-label{
+  white-space: unset !important
+}
+.ant-form-item-label > label::after{
+  margin: 0px 8px 0px 8px !important;
+}
+
+.ant-form-item-label > label  {
+  color: midnightblue !important;
+}
+
+.ant-select-selector{
+  border: none !important;
+  border-bottom: 1px solid black !important;
+  outline: 0 !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+}
+
+.ant-page-header-heading-left.ant-page-header-heading-title {
+  color: midnightblue ;
+}
+
+.ant-picker {
+  border: none !important;
+  border-bottom: 1px solid black !important;
+  outline: 0 !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+}
+
+.ant-page-header-heading-title.ant-page-header-heading-title {
+  color: midnightblue;
+}
+.ant-page-header-heading-sub-title.ant-page-header-heading-sub-title {
+  color: midnightblue;
+}
+
+.table-row-light {
+  background-color: #ffffff;
+}
+.table-row-dark {
+  background-color: #f2f2f2;
+}
+
+th{
+  background-color: steelblue!important;
+}
