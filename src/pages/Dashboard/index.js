@@ -1,27 +1,32 @@
 import React, { useState } from "react";
 import Header from "../../common/components/Header";
 import { Button, Row, Col, Input, Table } from "antd";
+import moment from "moment";
 import { data } from "../../utils/data";
 import "./Dashboard.scss";
 
-const Dashboard = () => {
+const Dashboard = props => {
+  const { history } = props;
   const [search, setSearch] = useState("");
   const [tableData, setTableData] = useState(data || []);
   const columns = [
     {
       title: "ID",
       key: "id",
-      dataIndex: "id"
+      dataIndex: "id",
+      render: (text, record) => <a onClick={() => onRowClick(record)}>{text}</a>
     },
     {
       title: "Case Number",
       dataIndex: "case_number",
-      key: "case_number"
+      key: "case_number",
+      render: (text, record) => <a onClick={() => onRowClick(record)}>{text}</a>
     },
     {
       title: "Name",
       key: "name",
-      dataIndex: "name"
+      dataIndex: "name",
+      render: (text, record) => <a onClick={() => onRowClick(record)}>{text}</a>
     },
     {
       title: "Post",
@@ -57,8 +62,12 @@ const Dashboard = () => {
       title: "Status",
       key: "status",
       dataIndex: "status"
-    }
+    } //  eslint-disable-line
   ];
+
+  const onRowClick = record => {
+    history.push(`patient-record/id=${record.id}`);
+  };
 
   const onSearchChange = ({ target: { value } }) => {
     setSearch(value);
@@ -68,9 +77,9 @@ const Dashboard = () => {
     const tableData = [];
     data.forEach(a => {
       if (
-        a.name.includes(search) ||
-        a.id.includes(search) ||
-        a.case_number.includes(search)
+        a.name.toLowerCase().includes(search.toLowerCase()) ||
+        a.id.toLowerCase().includes(search.toLowerCase()) ||
+        a.case_number.toLowerCase().includes(search.toLowerCase())
       ) {
         tableData.push(a);
       }
@@ -79,29 +88,37 @@ const Dashboard = () => {
   };
 
   return (
-    <>
+    <div className="page-container">
       <Header title="Covid Tracer" />
-      <div className="page-container">
+      <div className="container-fluid">
+        <div className="mt-10 text-blue">
+          {moment().format("dddd, MMMM D YYYY")}
+        </div>
         <Row>
-          <Col md={6} sm={12} xs={12} className="mt-30">
-            <div className=" text-blue">
-              Search by Name or ID or Case Number
+          <Col md={14} sm={12} xs={12} className="mt-30">
+            <div className="d-flex flex-row search-box">
+              <div className="text-blue">
+                Search by Name or ID or Case Number
+              </div>
+              <Input
+                className="Input"
+                value={search}
+                placeholder="Search"
+                onChange={onSearchChange}
+              />
             </div>
             <div className="mt-20 mb-20">
-              <Button type="primary" style={{ width: 180 }} onClick={onSearch}>
+              <Button
+                type="primary"
+                style={{ width: 180, background: "#005677" }}
+                onClick={onSearch}
+              >
                 Go
               </Button>
             </div>
           </Col>
-          <Col md={6} sm={12} xs={12} className="mt-30">
-            <Input
-              className="Input"
-              value={search}
-              placeholder="Search"
-              onChange={onSearchChange}
-            />
-          </Col>
-          <Col md={6} sm={12} xs={12}>
+          <div className="ml-20"></div>
+          <Col md={8} sm={12} xs={12}>
             <div className="outer-box">
               <div className="dark-box">Cases (YTD)</div>
               <div className="light-box">{tableData.length}</div>
@@ -165,12 +182,12 @@ const Dashboard = () => {
             }
             dataSource={tableData}
             columns={columns}
-            pagination={{ pageSize: "20" }}
+            pagination={{ pageSize: "10" }}
             scroll={{ x: 1000 }}
           />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

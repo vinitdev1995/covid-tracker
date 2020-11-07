@@ -3,7 +3,7 @@ import PatientRecord from "../pages/PatientRecord";
 
 export const routePaths = {
   dashboard: "/dashboard",
-  patientRecord: "/patient-record"
+  patientRecord: "/patient-record/:id"
 };
 
 export const authRoutes = [
@@ -17,14 +17,14 @@ export const authRoutes = [
   {
     title: "Patient Record",
     path: routePaths.patientRecord,
-    url: routePaths.patientRecord,
     exact: true,
+    url: routePaths.patientRecord,
     main: PatientRecord
   },
   {
     title: "Home",
-    path: "/",
-    url: "/",
+    path: "*",
+    url: "*",
     exact: true,
     main: Dashboard
   } // eslint-disable-line

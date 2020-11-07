@@ -1,9 +1,8 @@
 @import "./src/common/styles/variables";
 
 .page-container{
-  padding: $m_20;
   .ant-form-item-label {
-    color: midnightblue !important;
+    color: $color_darkGreen !important;
   }
   .ant-form-item-control-input {
     outline: 0 !important;
@@ -32,7 +31,7 @@
   }
 
   .ant-form-item-label > label  {
-    color: midnightblue !important;
+    color: $color_darkGreen !important;
   }
 
   .table-row-light {
@@ -43,17 +42,25 @@
   }
 
   th{
-    background-color: steelblue!important;
+    background-color: $color_darkGreen!important;
+  }
+  .search-box{
+    width: 500px;
+  }
+  @media screen and (max-width: 550px){
+    .search-box {
+      width: 350px;
+    }
   }
   .outer-box{
-    margin-left: $m_50;
     display: flex;
     flex-direction: row;
-    width: 400px;
+    width: 350px;
   }
   .dark-box{
-    background-color:steelblue;
+    background-color:$color_darkGreen;
     width: 100%;
+    color: $color_white;
     padding-left: $m_20;
     border-bottom: 2px solid white !important;
   }
@@ -61,5 +68,9 @@
     width: 100%;
     text-align: center;
     border-bottom: 2px solid black !important;
+    color: $color_darkGreen;
+  }
+  a:not([href]):not([class]){
+    text-decoration: underline;
   }
 }

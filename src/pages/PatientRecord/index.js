@@ -1,565 +1,466 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../common/components/Header";
-import { CustomInput } from "./Common/Input";
-import { CustomSelectInput } from "./Common/SelectInput";
-import { data1 } from "../../utils/data";
+import { CustomInput } from "../../common/components/Input";
+import { CustomSelectInput } from "../../common/components/SelectInput";
+import moment from "moment";
+import { data1, data, data3 } from "../../utils/data";
+import { CustomSwitchInput } from "../../common/components/SwitchInput";
+import { DatePickerInput } from "../../common/components/DatePickerInput";
 import "./patient-record.scss";
-import {
-  Form,
-  Input,
-  DatePicker,
-  Switch,
-  Row,
-  Layout,
-  PageHeader,
-  Col,
-  Table
-} from "antd";
+import { Form, Input, Row, Layout, PageHeader, Col, Table } from "antd";
 const { Content } = Layout;
-class PatientRecord extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      newData: {
-        StudentIDList: ["1", "2"],
-        CaseNumber: "",
-        LastName: "",
-        FirstName: "",
-        Grade: ["1", "2", "4"],
-        Teacher: ["wqwq", "wqwq", "wwwq"],
-        isHome: true,
-        PG: true,
-        Date: "",
-        Reference: "",
-        SelectSymptoms: ["wqwq", "aawqwq", "wwwq"],
-        Temprature: ["10", "20", "30"],
-        AffectedArea: ["a", "b", "c"],
-        isStafNotified: true,
-        SelectSymptomsID: [],
-        StudentID: "",
-        TeacherID: "",
-        GradeId: "",
-        TempratureID: "",
-        AffectedAreaID: "",
-        error: {
-          SelectSymptomsID: "",
-          StudentID: "",
-          TeacherID: "",
-          GradeId: "",
-          TempratureID: "",
-          AffectedAreaID: ""
-        }
-      },
-      HourTracker: {
-        CheckInDate: "",
-        Status: ["Return to school", "Remote  Quarantine"],
-        Symptoms: ["ew", "ewew", "ewew"],
-        ChangeRemote: ["ew", "ewew", "ewew"],
-        TeacherNotified: ["ew", "ewew", "ewew"],
-        SisChangeConducted: ["ew", "ewew", "ewew"],
-        HandoutProvided: ["ew", "ewew", "ewew"],
-        covidDate: "",
-        CurrentStatus: "",
-        StatusID: "",
-        SymptomsID: [],
-        ChangeRemoteID: "",
-        TeacherNotifiedID: "",
-        SisChangeConductedID: "",
-        HandoutProvidedID: ""
-      },
-      ReturnTracker: {
-        CheckInDate: "",
-        AnticipatedReturnDate: "",
-        TeacherNotifiedReturn: ["re", "Rere", "Rer"],
-        TeacherNotifiedReturnDate: ["ss", "dwd", "dww"],
-        StudentNegativeCovidTest: ["Re", "Rere", "Re"],
-        StudentNegativeCovidTestDate: "",
-        StudentReturn: ["Ee", "Rere", "Rere"],
-        StudentChangeSis: ["dsd", "Dsds", "sd"],
-        StudentReturnDate: "",
-        CurrentSymptoms: ["ewew", "ew", "Ee", "we"],
-        CurrentSymptomsID: [],
-        TeacherNotifiedReturnDateID: "",
-        TeacherNotifiedReturnID: "",
-        StudentNegativeCovidTestID: "",
-        StudentReturnID: "",
-        StudentChangeSisID: ""
-      }
-    };
-  }
+const PatientRecord = props => {
+  const [formData, setFormData] = useState(data3);
+  const columns1 = [
+    {
+      title: "Number",
+      key: "number",
+      dataIndex: "number"
+    },
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name"
+    },
+    {
+      title: "Student / Teacher / Staff",
+      key: "post",
+      dataIndex: "post"
+    },
+    {
+      title: "Date Tracked",
+      key: "date_tracked",
+      dataIndex: "date_tracked"
+    },
+    {
+      title: "Date Notified",
+      key: "date_notified",
+      dataIndex: "date_notified"
+    },
+    {
+      title: "Date Of Contact",
+      key: "date_of_contact",
+      dataIndex: "date_of_contact"
+    },
+    {
+      title: "Symptoms of Covid",
+      key: "s_o_covid",
+      dataIndex: "s_o_covid"
+    },
+    {
+      title: "Status",
+      key: "status",
+      dataIndex: "status"
+    }, //eslint-disable-line
+  ];
 
-  handleChange = e => {
-    this.setState({
-      newData: {
-        ...this.state.newData,
-        [e.target.name]: e.target.value
-      }
-    });
+  useEffect(() => {
+    const findList = data.filter(item => (props.match.params.id = item)); //eslint-disable-line
+  }, []);
+
+  const onInitialDataChange = e => {
+    const initialData = formData.initialData;
+    initialData[e.target.name] = e.target.value;
+    const data1 = { ...formData, initialData };
+    setFormData(data1);
   };
 
-  onDateChange = (date, dateString) => {
-    this.setState({
-      newData: {
-        ...this.state.newData,
-        Date: dateString
-      }
-    });
+  const onInitialDateChange = (date, dateString) => {
+    const initialData = formData.initialData;
+    initialData["Date"] = dateString;
+    const data1 = { ...formData, initialData };
+    setFormData(data1);
   };
 
-  handleDataChange = (type, date, dateString) => {
-    this.setState({
-      HourTracker: {
-        ...this.state.HourTracker,
-        [type]: dateString
-      }
-    });
+  const onHourDateChange = (type, date, dateString) => {
+    const HourTracker = formData.HourTracker;
+    HourTracker[type] = dateString;
+    const data1 = { ...formData, HourTracker };
+    setFormData(data1);
   };
 
-  handleOnChange = e => {
-    this.setState({
-      HourTracker: {
-        ...this.state.HourTracker,
-        [e.target.name]: e.target.value
-      }
-    });
+  const onHourDataChange = e => {
+    const HourTracker = formData.HourTracker;
+    HourTracker[e.target.name] = e.target.value;
+    const data1 = { ...formData, HourTracker };
+    setFormData(data1);
   };
 
-  ReturnTrackerChange = (type, date, dateString) => {
-    this.setState({
-      ReturnTracker: {
-        ...this.state.ReturnTracker,
-        [type]: dateString
-      }
-    });
+  const onReturnTrackerChange = (type, date, dateString) => {
+    const ReturnTracker = formData.ReturnTracker;
+    ReturnTracker[type] = dateString;
+    const data1 = { ...formData, ReturnTracker };
+    setFormData(data1);
   };
 
-  Change = e => {
-    this.setState({
-      ReturnTracker: {
-        ...this.state.ReturnTracker,
-        [e.target.name]: e.target.value
-      }
-    });
+  const onReturnDateChange = e => {
+    const ReturnTracker = formData.ReturnTracker;
+    ReturnTracker[e.target.name] = e.target.value;
+    const data1 = { ...formData, ReturnTracker };
+    setFormData(data1);
   };
 
-  render() {
-    const { newData, HourTracker, ReturnTracker } = this.state;
-    const columns1 = [
-      {
-        title: "Number",
-        key: "number",
-        dataIndex: "number"
-      },
-      {
-        title: "Name",
-        dataIndex: "name",
-        key: "name"
-      },
-      {
-        title: "Student / Teacher / Staff",
-        key: "post",
-        dataIndex: "post"
-      },
-      {
-        title: "Date Tracked",
-        key: "date_tracked",
-        dataIndex: "date_tracked"
-      },
-      {
-        title: "Date Notified",
-        key: "date_notified",
-        dataIndex: "date_notified"
-      },
-      {
-        title: "Date Of Contact",
-        key: "date_of_contact",
-        dataIndex: "date_of_contact"
-      },
-      {
-        title: "Symptoms of Covid",
-        key: "s_o_covid",
-        dataIndex: "s_o_covid"
-      },
-      {
-        title: "Status",
-        key: "status",
-        dataIndex: "status"
-      }, //eslint-disable-line
-    ];
-    return (
-      <div>
-        <Header title="Covid Patient Record" />
-        <Layout>
-          <Content style={{ padding: "0 50px" }}>
-            <Row style={{ marginTop: 10 }}>
-              <Col md={8} style={{ padding: 10 }}>
-                <Form
-                  labelCol={{ span: 8 }}
-                  wrapperCol={{ span: 18 }}
-                  layout="horizontal"
-                >
-                  <CustomInput
-                    label="Case Number"
-                    name="CaseNumber"
-                    value={newData.CaseNumber}
-                    onChange={this.handleChange}
-                  />
-                  <CustomSelectInput
-                    label="Student ID"
-                    name="StudentID"
-                    value={newData.StudentID}
-                    onChange={value =>
-                      this.handleChange({
-                        target: { name: "StudentID", value }
-                      })
-                    }
-                    optionValues={newData.StudentIDList}
-                  />
-                  <CustomInput
-                    label="Student Last Name"
-                    name="LastName"
-                    value={newData.LastName}
-                    onChange={this.handleChange}
-                  />
-                  <CustomInput
-                    label="Student First Name"
-                    name="FirstName"
-                    value={newData.FirstName}
-                    onChange={this.handleChange}
-                  />
-                  <CustomSelectInput
-                    label="Student Grade"
-                    name="GradeID"
-                    value={newData.GradeID}
-                    onChange={value =>
-                      this.handleChange({ target: { name: "GradeID", value } })
-                    }
-                    optionValues={newData.Grade}
-                  />
-                  <CustomSelectInput
-                    label="Teacher"
-                    name="TeacherID"
-                    value={newData.TeacherID}
-                    onChange={value =>
-                      this.handleChange({
-                        target: { name: "TeacherID", value }
-                      })
-                    }
-                    optionValues={newData.Teacher}
-                  />
-                  <Form.Item label="Sent Home From School?">
-                    <Switch
-                      size="small"
-                      name="isHome"
-                      checked={newData.isHome}
-                      onChange={value =>
-                        this.handleChange({ target: { name: "isHome", value } })
-                      }
-                    />
-                  </Form.Item>
-                  <Form.Item label="Nurse execused following P/G Contact">
-                    <Switch
-                      size="small"
-                      name="PG"
-                      checked={newData.PG}
-                      onChange={value =>
-                        this.handleChange({ target: { name: "PG", value } })
-                      }
-                    />
-                  </Form.Item>
-                  <Form.Item label="Date student was last in buildings">
-                    <DatePicker onChange={this.onDateChange} />
-                  </Form.Item>
-                  <CustomInput
-                    label="Reference"
-                    name="Reference"
-                    value={newData.Reference}
-                    o
-                    onChange={this.handleChange}
-                  />
-                  <CustomSelectInput
-                    label="Selecte Stymptoms"
-                    mode="multiple"
-                    name="SelectSymptomsID"
-                    value={newData.SelectSymptomsID}
-                    onChange={value =>
-                      this.handleChange({
-                        target: { name: "SelectSymptomsID", value }
-                      })
-                    }
-                    optionValues={newData.SelectSymptoms}
-                  />
-                  <CustomSelectInput
-                    label="temprature"
-                    name="TeacherID"
-                    value={newData.TempratureID}
-                    onChange={value =>
-                      this.handleChange({
-                        target: { name: "TempratureID", value }
-                      })
-                    }
-                    optionValues={newData.Temprature}
-                  />
-                  <CustomSelectInput
-                    label="Effected areas in the buildings"
-                    name="AffectedAreaID"
-                    value={newData.AffectedAreaID}
-                    onChange={value =>
-                      this.handleChange({
-                        target: { name: "AffectedAreaID", value }
-                      })
-                    }
-                    optionValues={newData.AffectedArea}
-                  />
-                  <Form.Item label="Building staff notified">
-                    <Switch
-                      size="small"
-                      name="isStafNotified"
-                      checked={newData.isStafNotified}
-                      onChange={value =>
-                        this.handleChange({
-                          target: { name: "isStafNotified", value }
-                        })
-                      }
-                    />
-                  </Form.Item>
-                </Form>
-              </Col>
-              <Col md={8} style={{ padding: 10 }}>
-                <Form
-                  labelCol={{ span: 8 }}
-                  wrapperCol={{ span: 18 }}
-                  layout="horizontal"
-                >
-                  <PageHeader
-                    title="48 Hour Tracker"
-                    subTitle="should show up after 48 hours"
-                    extra="22"
-                  />
-                  <Form.Item label="Check in Date">
-                    <DatePicker
-                      onChange={(e, value) =>
-                        this.handleDataChange("CheckInDate", e, value)
-                      }
-                    />
-                  </Form.Item>
-                  <CustomSelectInput
-                    label="Status"
-                    name="StatusID"
-                    value={HourTracker.StatusID}
-                    onChange={value =>
-                      this.handleOnChange({
-                        target: { name: "StatusID", value }
-                      })
-                    }
-                    optionValues={HourTracker.Status}
-                  />
-                  {HourTracker.StatusID !== "Return to school" && (
-                    <CustomSelectInput
-                      label="Symptoms"
-                      name="SymptomsID"
-                      mode="multiple"
-                      value={HourTracker.SymptomsID}
-                      onChange={value =>
-                        this.handleOnChange({
-                          target: { name: "SymptomsID", value }
-                        })
-                      }
-                      optionValues={HourTracker.Symptoms}
-                    />
-                  )}
-                  <CustomSelectInput
-                    label="Student Change in Remote"
-                    name="ChangeRemoteID"
-                    value={HourTracker.ChangeRemoteID}
-                    onChange={value =>
-                      this.handleOnChange({
-                        target: { name: "ChangeRemoteID", value }
-                      })
-                    }
-                    optionValues={HourTracker.ChangeRemote}
-                  />
-                  <CustomSelectInput
-                    label="Teacher Notified"
-                    name="TeacherNotifiedID"
-                    value={HourTracker.TeacherNotifiedID}
-                    onChange={value =>
-                      this.handleOnChange({
-                        target: { name: "TeacherNotifiedID", value }
-                      })
-                    }
-                    optionValues={HourTracker.TeacherNotified}
-                  />
-                  <CustomSelectInput
-                    label="Sis Change Conducted"
-                    name="SisChangeConductedID"
-                    value={HourTracker.SisChangeConductedID}
-                    onChange={value =>
-                      this.handleOnChange({
-                        target: { name: "SisChangeConductedID", value }
-                      })
-                    }
-                    optionValues={HourTracker.SisChangeConducted}
-                  />
-                  <CustomSelectInput
-                    label="andout Provided"
-                    name="HandoutProvidedID"
-                    value={HourTracker.HandoutProvidedID}
-                    onChange={value =>
-                      this.handleOnChange({
-                        target: { name: "HandoutProvidedID", value }
-                      })
-                    }
-                    optionValues={HourTracker.HandoutProvided}
-                  />
-                  <Form.Item label="Check in Date/Covid">
-                    <DatePicker
-                      onChange={(e, value) =>
-                        this.handleDataChange("covidDate", e, value)
-                      }
-                    />
-                  </Form.Item>
-                  <Form.Item label="Current Stutus">
-                    <Input />
-                  </Form.Item>
-                </Form>
-              </Col>
-              <Col md={8} style={{ padding: 10 }}>
-                <Form
-                  labelCol={{ span: 8 }}
-                  wrapperCol={{ span: 18 }}
-                  layout="horizontal"
-                >
-                  <PageHeader
-                    title="Return Tracker"
-                    subTitle="should show up after 14 Days"
-                  />
-                  <Form.Item label="Check in Date">
-                    <DatePicker
-                      onChange={(e, value) =>
-                        this.ReturnTrackerChange("CheckInDate", e, value)
-                      }
-                    />
-                  </Form.Item>
-                  <Form.Item label="Anticipated Return Date">
-                    <DatePicker
-                      onChange={(e, value) =>
-                        this.ReturnTrackerChange(
-                          "AnticipatedReturnDate",
-                          e,
-                          value
-                        )
-                      }
-                    />
-                  </Form.Item>
-                  <CustomSelectInput
-                    label="Teacher Notified of Return"
-                    name="TeacherNotifiedReturnID"
-                    value={ReturnTracker.TeacherNotifiedReturnID}
-                    onChange={value =>
-                      this.Change({
-                        target: { name: "TeacherNotifiedReturnID", value }
-                      })
-                    }
-                    optionValues={ReturnTracker.TeacherNotifiedReturn}
-                  />
-                  <CustomSelectInput
-                    label="Teacher Notified of Return Date"
-                    name="TeacherNotifiedReturnDateID"
-                    value={ReturnTracker.TeacherNotifiedReturnDateID}
-                    onChange={value =>
-                      this.Change({
-                        target: { name: "TeacherNotifiedReturnDateID", value }
-                      })
-                    }
-                    optionValues={ReturnTracker.TeacherNotifiedReturnDate}
-                  />
-                  <CustomSelectInput
-                    label="Student Nagetive Covid Test"
-                    name="StudentNegativeCovidTestID"
-                    value={ReturnTracker.StudentNegativeCovidTestID}
-                    onChange={value =>
-                      this.Change({
-                        target: { name: "StudentNegativeCovidTestID", value }
-                      })
-                    }
-                    optionValues={ReturnTracker.StudentNegativeCovidTest}
-                  />
-                  <Form.Item label="Date Student Negative Covid Test">
-                    <DatePicker
-                      onChange={(e, value) =>
-                        this.ReturnTrackerChange(
-                          "StudentNegativeCovidTestDate",
-                          e,
-                          value
-                        )
-                      }
-                    />
-                  </Form.Item>
-                  <CustomSelectInput
-                    label="Student Return"
-                    name="StudentReturnID"
-                    value={ReturnTracker.StudentReturnID}
-                    onChange={value =>
-                      this.Change({
-                        target: { name: "StudentReturnID", value }
-                      })
-                    }
-                    optionValues={ReturnTracker.StudentReturn}
-                  />
-                  <Form.Item label="Date of Student Return">
-                    <DatePicker
-                      onChange={(e, value) =>
-                        this.ReturnTrackerChange(
-                          "StudentNegativeCovidTestDate",
-                          e,
-                          value
-                        )
-                      }
-                    />
-                  </Form.Item>
-                  <CustomSelectInput
-                    label="Student Change to in-person in SIS"
-                    name="StudentChangeSisID"
-                    value={ReturnTracker.StudentChangeSisID}
-                    onChange={value =>
-                      this.Change({
-                        target: { name: "StudentChangeSisID", value }
-                      })
-                    }
-                    optionValues={ReturnTracker.StudentChangeSis}
-                  />
-                  <CustomSelectInput
-                    label="Current Symptoms"
-                    mode="multiple"
-                    name="CurrentSymptomsID"
-                    value={ReturnTracker.CurrentSymptomsID}
-                    onChange={value =>
-                      this.Change({
-                        target: { name: "CurrentSymptomsID", value }
-                      })
-                    }
-                    optionValues={ReturnTracker.CurrentSymptoms}
-                  />
-                </Form>
-              </Col>
-            </Row>
-          </Content>
-          <div className="mt-20">
-            <Table
-              rowClassName={(record, index) =>
-                index % 2 === 0 ? "table-row-dark" : "table-row-light"
-              }
-              dataSource={data1}
-              columns={columns1}
-              pagination={{ pageSize: "20" }}
-              scroll={{ x: 1000 }}
-            />
+  return (
+    <div>
+      <Header title="Covid Patient Record" />
+      <Layout>
+        <Content>
+          <div className="mt-10 text-blue">
+            {moment().format("dddd, MMMM D YYYY")}
           </div>
-        </Layout>
-      </div>
-    );
-  }
-}
+          <Row style={{ marginTop: 10 }}>
+            <Col md={8} style={{ padding: 10 }}>
+              <Form
+                labelCol={{ span: 8 }}
+                wrapperCol={{ span: 18 }}
+                layout="horizontal"
+              >
+                <CustomInput
+                  label="Case Number"
+                  name="caseNumber"
+                  value={formData.initialData.caseNumber || ""}
+                  onChange={onInitialDataChange}
+                />
+                <CustomSelectInput
+                  label="Student ID"
+                  name="studentID"
+                  value={formData.initialData.studentID || []}
+                  onChange={value =>
+                    onInitialDataChange({
+                      target: { name: "studentID", value }
+                    })
+                  }
+                  options={formData.initialData.studentIDList}
+                />
+
+                <CustomInput
+                  label="Student Last Name"
+                  name="lastName"
+                  value={formData.initialData.lastName}
+                  onChange={onInitialDataChange}
+                />
+                <CustomInput
+                  label="Student First Name"
+                  name="firstName"
+                  value={formData.initialData.firstName}
+                  onChange={onInitialDataChange}
+                />
+                <CustomSelectInput
+                  label="Student Grade"
+                  name="gradeID"
+                  value={formData.initialData.gradeID}
+                  onChange={value =>
+                    onInitialDataChange({ target: { name: "gradeID", value } })
+                  }
+                  options={formData.initialData.grade}
+                />
+                <CustomSelectInput
+                  label="Teacher"
+                  name="teacherID"
+                  value={formData.initialData.teacherID}
+                  onChange={value =>
+                    onInitialDataChange({
+                      target: { name: "teacherID", value }
+                    })
+                  }
+                  options={formData.initialData.teacher}
+                />
+                <CustomSwitchInput
+                  label="Sent Home From School"
+                  name="isHome"
+                  checked={formData.initialData.isHome}
+                  handleChange={value =>
+                    onInitialDataChange({ target: { name: "isHome", value } })
+                  }
+                />
+                <CustomSwitchInput
+                  label="Nurse execused following P/G Contact"
+                  name="PG"
+                  checked={formData.initialData.PG}
+                  handleChange={value =>
+                    onInitialDataChange({ target: { name: "PG", value } })
+                  }
+                />
+                <DatePickerInput
+                  label="Date student was last in buildings"
+                  handleChange={onInitialDateChange}
+                />
+                <CustomInput
+                  label="Reference"
+                  name="reference"
+                  value={formData.initialData.reference}
+                  o
+                  onChange={onInitialDataChange}
+                />
+                <CustomSelectInput
+                  label="Selecte Stymptoms"
+                  mode="multiple"
+                  name="selectSymptomsID"
+                  value={formData.initialData.selectSymptomsID}
+                  onChange={value =>
+                    onInitialDataChange({
+                      target: { name: "selectSymptomsID", value }
+                    })
+                  }
+                  options={formData.initialData.selectSymptoms}
+                />
+                <CustomSelectInput
+                  label="Temprature"
+                  name="tempratureID"
+                  value={formData.initialData.tempratureID}
+                  onChange={value =>
+                    onInitialDataChange({
+                      target: { name: "tempratureID", value }
+                    })
+                  }
+                  options={formData.initialData.temprature}
+                />
+                <CustomSelectInput
+                  label="Effected areas in the buildings"
+                  name="affectedAreaID"
+                  value={formData.initialData.affectedAreaID}
+                  onChange={value =>
+                    onInitialDataChange({
+                      target: { name: "affectedAreaID", value }
+                    })
+                  }
+                  options={formData.initialData.affectedArea}
+                />
+                <CustomSwitchInput
+                  label="Building staff notified"
+                  name="isStafNotified"
+                  checked={formData.initialData.isStafNotified}
+                  handleChange={value =>
+                    onInitialDataChange({
+                      target: { name: "isStafNotified", value }
+                    })
+                  }
+                />
+              </Form>
+            </Col>
+            <Col md={8} style={{ padding: 10 }}>
+              <Form
+                labelCol={{ span: 8 }}
+                wrapperCol={{ span: 18 }}
+                layout="horizontal"
+              >
+                <PageHeader
+                  title="48 Hour Tracker"
+                  subTitle="should show up after 48 hours"
+                />
+                <DatePickerInput
+                  label="Check in Date"
+                  handleChange={(e, value) =>
+                    onHourDateChange("checkInDate", e, value)
+                  }
+                />
+                <CustomSelectInput
+                  label="Status"
+                  name="statusID"
+                  value={formData.HourTracker.statusID}
+                  onChange={value =>
+                    onHourDataChange({
+                      target: { name: "statusID", value }
+                    })
+                  }
+                  options={formData.HourTracker.status}
+                />
+                {formData.HourTracker.StatusID !== "Return to school" && (
+                  <CustomSelectInput
+                    label="Symptoms"
+                    name="symptomsID"
+                    mode="multiple"
+                    value={formData.HourTracker.symptomsID}
+                    onChange={value =>
+                      onHourDataChange({
+                        target: { name: "symptomsID", value }
+                      })
+                    }
+                    options={formData.HourTracker.symptoms}
+                  />
+                )}
+                <CustomSelectInput
+                  label="Student Change in Remote"
+                  name="changeRemoteID"
+                  value={formData.HourTracker.changeRemoteID}
+                  onChange={value =>
+                    onHourDataChange({
+                      target: { name: "changeRemoteID", value }
+                    })
+                  }
+                  options={formData.HourTracker.changeRemote}
+                />
+                <CustomSelectInput
+                  label="Teacher Notified"
+                  name="teacherNotifiedID"
+                  value={formData.HourTracker.teacherNotifiedID}
+                  onChange={value =>
+                    onHourDataChange({
+                      target: { name: "teacherNotifiedID", value }
+                    })
+                  }
+                  options={formData.HourTracker.teacherNotified}
+                />
+                <CustomSelectInput
+                  label="Sis Change Conducted"
+                  name="sisChangeConductedID"
+                  value={formData.HourTracker.sisChangeConductedID}
+                  onChange={value =>
+                    onHourDataChange({
+                      target: { name: "sisChangeConductedID", value }
+                    })
+                  }
+                  options={formData.HourTracker.sisChangeConducted}
+                />
+                <CustomSelectInput
+                  label="andout Provided"
+                  name="handoutProvidedID"
+                  value={formData.HourTracker.handoutProvidedID}
+                  onChange={value =>
+                    onHourDataChange({
+                      target: { name: "handoutProvidedID", value }
+                    })
+                  }
+                  options={formData.HourTracker.handoutProvided}
+                />
+                <DatePickerInput
+                  label="Check in Date/Covid"
+                  handleChange={(e, value) =>
+                    onHourDateChange("covidDate", e, value)
+                  }
+                />
+                <Form.Item label="Current Stutus">
+                  <Input />
+                </Form.Item>
+              </Form>
+            </Col>
+            <Col md={8} style={{ padding: 10 }}>
+              <Form
+                labelCol={{ span: 8 }}
+                wrapperCol={{ span: 18 }}
+                layout="horizontal"
+              >
+                <PageHeader
+                  title="Return Tracker"
+                  subTitle="should show up after 14 Days"
+                />
+                <DatePickerInput
+                  label="Check in Date"
+                  handleChange={(e, value) =>
+                    onReturnTrackerChange("checkInDate", e, value)
+                  }
+                />
+                <DatePickerInput
+                  label="Anticipated Return Date"
+                  handleChange={(e, value) =>
+                    onReturnTrackerChange("anticipatedReturnDate", e, value)
+                  }
+                />
+                <CustomSelectInput
+                  label="Teacher Notified of Return"
+                  name="teacherNotifiedReturnID"
+                  value={formData.ReturnTracker.teacherNotifiedReturnID}
+                  onChange={value =>
+                    onReturnDateChange({
+                      target: { name: "teacherNotifiedReturnID", value }
+                    })
+                  }
+                  options={formData.ReturnTracker.teacherNotifiedReturn}
+                />
+                <CustomSelectInput
+                  label="Teacher Notified of Return Date"
+                  name="teacherNotifiedReturnDateID"
+                  value={formData.ReturnTracker.teacherNotifiedReturnDateID}
+                  onChange={value =>
+                    onReturnDateChange({
+                      target: { name: "teacherNotifiedReturnDateID", value }
+                    })
+                  }
+                  options={formData.ReturnTracker.teacherNotifiedReturnDate}
+                />
+                <CustomSelectInput
+                  label="Student Nagetive Covid Test"
+                  name="studentNegativeCovidTestID"
+                  value={formData.ReturnTracker.studentNegativeCovidTestID}
+                  onChange={value =>
+                    onReturnDateChange({
+                      target: { name: "studentNegativeCovidTestID", value }
+                    })
+                  }
+                  options={formData.ReturnTracker.studentNegativeCovidTest}
+                />
+                <DatePickerInput
+                  label="Date Student Negative Covid Test"
+                  handleChange={(e, value) =>
+                    onReturnTrackerChange(
+                      "studentNegativeCovidTestDate",
+                      e,
+                      value
+                    )
+                  }
+                />
+                <CustomSelectInput
+                  label="Student Return"
+                  name="studentReturnID"
+                  value={formData.ReturnTracker.studentReturnID}
+                  onChange={value =>
+                    onReturnDateChange({
+                      target: { name: "studentReturnID", value }
+                    })
+                  }
+                  options={formData.ReturnTracker.studentReturn}
+                />
+                <DatePickerInput
+                  label="Date of Student Return"
+                  handleChange={(e, value) =>
+                    onReturnTrackerChange(
+                      "studentNegativeCovidTestDate",
+                      e,
+                      value
+                    )
+                  }
+                />
+                <CustomSelectInput
+                  label="Student Change to in-person in SIS"
+                  name="studentChangeSisID"
+                  value={formData.ReturnTracker.studentChangeSisID}
+                  onChange={value =>
+                    onReturnDateChange({
+                      target: { name: "studentChangeSisID", value }
+                    })
+                  }
+                  options={formData.ReturnTracker.studentChangeSis}
+                />
+                <CustomSelectInput
+                  label="Current Symptoms"
+                  mode="multiple"
+                  name="currentSymptomsID"
+                  value={formData.ReturnTracker.currentSymptomsID}
+                  onChange={value =>
+                    onReturnDateChange({
+                      target: { name: "currentSymptomsID", value }
+                    })
+                  }
+                  options={formData.ReturnTracker.currentSymptoms}
+                />
+              </Form>
+            </Col>
+          </Row>
+        </Content>
+        <div className="mt-20 container-fluid">
+          <Table
+            rowClassName={(record, index) =>
+              index % 2 === 0 ? "table-row-dark" : "table-row-light"
+            }
+            dataSource={data1}
+            columns={columns1}
+            pagination={{ pageSize: "20" }}
+            scroll={{ x: 1000 }}
+          />
+        </div>
+      </Layout>
+    </div>
+  );
+};
 
 export default PatientRecord;

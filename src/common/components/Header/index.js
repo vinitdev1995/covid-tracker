@@ -1,14 +1,8 @@
-import React from 'react';
-import moment from 'moment';
+import React from "react";
 import "./header.scss";
 
-const Header = ({title}) =>{
-    return(
-        <div>
-        <div className="Header">{title}</div>
-            <div className=" ml-20 text-blue">{moment().format("dddd, MMMM D YYYY")}</div>
-        </div>
-    );
-}
+const Header = ({ title }) => {
+  return <div className="text-center Header">{title}</div>;
+};
 
 export default Header;

@@ -19,7 +19,7 @@ body {
 }
 
 .text-blue{
-  color: $color_link;
+  color: $color_darkblue;
 }
 
 .mb-20{
@@ -28,6 +28,10 @@ body {
 
 .mt-20{
   margin-top: $m_20;
+}
+
+.mt-10{
+  margin-top: $m_10;
 }
 
 .mt-30{
