@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import Header from "../../common/components/Header";
-import { Button, Row, Col, Input, Table } from "antd";
+import { Row, Col, Table } from "antd";
 import moment from "moment";
 import { data } from "../../utils/data";
+import { CustomInput } from "../../common/components/Input";
 import "./Dashboard.scss";
 
 const Dashboard = props => {
@@ -66,7 +67,7 @@ const Dashboard = props => {
   ];
 
   const onRowClick = record => {
-    history.push(`patient-record/id=${record.id}`);
+    history.push(`patient-record/${record.id}`);
   };
 
   const onSearchChange = ({ target: { value } }) => {
@@ -100,7 +101,7 @@ const Dashboard = props => {
               <div className="text-blue">
                 Search by Name or ID or Case Number
               </div>
-              <Input
+              <CustomInput
                 className="Input"
                 value={search}
                 placeholder="Search"
@@ -108,13 +109,13 @@ const Dashboard = props => {
               />
             </div>
             <div className="mt-20 mb-20">
-              <Button
+              <button
                 type="primary"
                 style={{ width: 180, background: "#005677" }}
                 onClick={onSearch}
               >
                 Go
-              </Button>
+              </button>
             </div>
           </Col>
           <div className="ml-20"></div>
@@ -177,6 +178,7 @@ const Dashboard = props => {
         </Row>
         <div className="mt-20">
           <Table
+            rowKey={record => record.id}
             rowClassName={(record, index) =>
               index % 2 === 0 ? "table-row-dark" : "table-row-light"
             }

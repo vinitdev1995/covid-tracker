@@ -3,13 +3,13 @@ import Header from "../../common/components/Header";
 import { CustomInput } from "../../common/components/Input";
 import { CustomSelectInput } from "../../common/components/SelectInput";
 import moment from "moment";
-import { data1, data, data3 } from "../../utils/data";
+import { updateData, data3 } from "../../utils/data";
 import { CustomSwitchInput } from "../../common/components/SwitchInput";
-import { DatePickerInput } from "../../common/components/DatePickerInput";
+import { DataPickerInput } from "../../common/components/DataPickerInput";
 import "./patient-record.scss";
-import { Form, Input, Row, Layout, PageHeader, Col, Table } from "antd";
+import { Form, Row, Layout, PageHeader, Col, Table } from "antd";
 const { Content } = Layout;
-const PatientRecord = props => {
+const PatientRecord = () => {
   const [formData, setFormData] = useState(data3);
   const columns1 = [
     {
@@ -45,7 +45,14 @@ const PatientRecord = props => {
     {
       title: "Symptoms of Covid",
       key: "s_o_covid",
-      dataIndex: "s_o_covid"
+      dataIndex: "s_o_covid",
+      render: symptoms => (
+        <>
+          {symptoms.map((symptom, index) => {
+            return <span key={index}>{symptom} </span>;
+          })}
+        </>
+      )
     },
     {
       title: "Status",
@@ -55,57 +62,59 @@ const PatientRecord = props => {
   ];
 
   useEffect(() => {
-    const findList = data.filter(item => (props.match.params.id = item)); //eslint-disable-line
+    // const findList = data.filter(item => (props.match.params.id = item)); //eslint-disable-line
   }, []);
 
-  const onInitialDataChange = e => {
-    const initialData = formData.initialData;
-    initialData[e.target.name] = e.target.value;
-    const data1 = { ...formData, initialData };
-    setFormData(data1);
+  const handleChange = (e, type) => {
+    const data = formData;
+    const changeData = formData[type];
+    changeData[e.target.name] = e.target.value;
+    data[type] = changeData;
+    setFormData(prev => ({ ...prev, [type]: changeData }));
   };
 
-  const onInitialDateChange = (date, dateString) => {
-    const initialData = formData.initialData;
-    initialData["Date"] = dateString;
-    const data1 = { ...formData, initialData };
-    setFormData(data1);
+  const onDateChange = (name, date, dateString, type) => {
+    const data = formData;
+    const changeData = formData[type];
+    changeData[name] = dateString;
+    data[type] = changeData;
+    setFormData(prev => ({ ...prev, [type]: changeData }));
   };
 
-  const onHourDateChange = (type, date, dateString) => {
-    const HourTracker = formData.HourTracker;
-    HourTracker[type] = dateString;
-    const data1 = { ...formData, HourTracker };
-    setFormData(data1);
-  };
+  // const onHourDateChange = (type, date, dateString) => {
+  //   const HourTracker = formData.HourTracker;
+  //   HourTracker[type] = dateString;
+  //   const data1 = { ...formData, HourTracker };
+  //   setFormData(data1);
+  // };
 
-  const onHourDataChange = e => {
-    const HourTracker = formData.HourTracker;
-    HourTracker[e.target.name] = e.target.value;
-    const data1 = { ...formData, HourTracker };
-    setFormData(data1);
-  };
+  // const onHourDataChange = e => {
+  //   const HourTracker = formData.HourTracker;
+  //   HourTracker[e.target.name] = e.target.value;
+  //   const data1 = { ...formData, HourTracker };
+  //   setFormData(data1);
+  // };
 
-  const onReturnTrackerChange = (type, date, dateString) => {
-    const ReturnTracker = formData.ReturnTracker;
-    ReturnTracker[type] = dateString;
-    const data1 = { ...formData, ReturnTracker };
-    setFormData(data1);
-  };
+  // const onReturnTrackerChange = (type, date, dateString) => {
+  //   const ReturnTracker = formData.ReturnTracker;
+  //   ReturnTracker[type] = dateString;
+  //   const data1 = { ...formData, ReturnTracker };
+  //   setFormData(data1);
+  // };
 
-  const onReturnDateChange = e => {
-    const ReturnTracker = formData.ReturnTracker;
-    ReturnTracker[e.target.name] = e.target.value;
-    const data1 = { ...formData, ReturnTracker };
-    setFormData(data1);
-  };
+  // const onReturnDateChange = e => {
+  //   const ReturnTracker = formData.ReturnTracker;
+  //   ReturnTracker[e.target.name] = e.target.value;
+  //   const data1 = { ...formData, ReturnTracker };
+  //   setFormData(data1);
+  // };
 
   return (
     <div>
       <Header title="Covid Patient Record" />
       <Layout>
         <Content>
-          <div className="mt-10 text-blue">
+          <div className="mt-10 ml-10 text-blue">
             {moment().format("dddd, MMMM D YYYY")}
           </div>
           <Row style={{ marginTop: 10 }}>
@@ -118,17 +127,20 @@ const PatientRecord = props => {
                 <CustomInput
                   label="Case Number"
                   name="caseNumber"
-                  value={formData.initialData.caseNumber || ""}
-                  onChange={onInitialDataChange}
+                  value={formData.initialData.caseNumber}
+                  onChange={e => handleChange(e, "initialData")}
                 />
                 <CustomSelectInput
                   label="Student ID"
                   name="studentID"
                   value={formData.initialData.studentID || []}
                   onChange={value =>
-                    onInitialDataChange({
-                      target: { name: "studentID", value }
-                    })
+                    handleChange(
+                      {
+                        target: { name: "studentID", value }
+                      },
+                      "initialData"
+                    )
                   }
                   options={formData.initialData.studentIDList}
                 />
@@ -137,20 +149,23 @@ const PatientRecord = props => {
                   label="Student Last Name"
                   name="lastName"
                   value={formData.initialData.lastName}
-                  onChange={onInitialDataChange}
+                  onChange={e => handleChange(e, "initialData")}
                 />
                 <CustomInput
                   label="Student First Name"
                   name="firstName"
                   value={formData.initialData.firstName}
-                  onChange={onInitialDataChange}
+                  onChange={e => handleChange(e, "initialData")}
                 />
                 <CustomSelectInput
                   label="Student Grade"
                   name="gradeID"
                   value={formData.initialData.gradeID}
                   onChange={value =>
-                    onInitialDataChange({ target: { name: "gradeID", value } })
+                    handleChange(
+                      { target: { name: "gradeID", value } },
+                      "initialData"
+                    )
                   }
                   options={formData.initialData.grade}
                 />
@@ -159,9 +174,12 @@ const PatientRecord = props => {
                   name="teacherID"
                   value={formData.initialData.teacherID}
                   onChange={value =>
-                    onInitialDataChange({
-                      target: { name: "teacherID", value }
-                    })
+                    handleChange(
+                      {
+                        target: { name: "teacherID", value }
+                      },
+                      "initialData"
+                    )
                   }
                   options={formData.initialData.teacher}
                 />
@@ -170,7 +188,10 @@ const PatientRecord = props => {
                   name="isHome"
                   checked={formData.initialData.isHome}
                   handleChange={value =>
-                    onInitialDataChange({ target: { name: "isHome", value } })
+                    handleChange(
+                      { target: { name: "isHome", value } },
+                      "initialData"
+                    )
                   }
                 />
                 <CustomSwitchInput
@@ -178,19 +199,24 @@ const PatientRecord = props => {
                   name="PG"
                   checked={formData.initialData.PG}
                   handleChange={value =>
-                    onInitialDataChange({ target: { name: "PG", value } })
+                    handleChange(
+                      { target: { name: "PG", value } },
+                      "initialData"
+                    )
                   }
                 />
-                <DatePickerInput
+                <DataPickerInput
                   label="Date student was last in buildings"
-                  handleChange={onInitialDateChange}
+                  handleChange={(e, value) =>
+                    onDateChange("Date", e, value, "initialData")
+                  }
                 />
                 <CustomInput
                   label="Reference"
                   name="reference"
                   value={formData.initialData.reference}
                   o
-                  onChange={onInitialDataChange}
+                  onChange={e => handleChange(e, "initialData")}
                 />
                 <CustomSelectInput
                   label="Selecte Stymptoms"
@@ -198,9 +224,12 @@ const PatientRecord = props => {
                   name="selectSymptomsID"
                   value={formData.initialData.selectSymptomsID}
                   onChange={value =>
-                    onInitialDataChange({
-                      target: { name: "selectSymptomsID", value }
-                    })
+                    handleChange(
+                      {
+                        target: { name: "selectSymptomsID", value }
+                      },
+                      "initialData"
+                    )
                   }
                   options={formData.initialData.selectSymptoms}
                 />
@@ -209,9 +238,12 @@ const PatientRecord = props => {
                   name="tempratureID"
                   value={formData.initialData.tempratureID}
                   onChange={value =>
-                    onInitialDataChange({
-                      target: { name: "tempratureID", value }
-                    })
+                    handleChange(
+                      {
+                        target: { name: "tempratureID", value }
+                      },
+                      "initialData"
+                    )
                   }
                   options={formData.initialData.temprature}
                 />
@@ -220,9 +252,12 @@ const PatientRecord = props => {
                   name="affectedAreaID"
                   value={formData.initialData.affectedAreaID}
                   onChange={value =>
-                    onInitialDataChange({
-                      target: { name: "affectedAreaID", value }
-                    })
+                    handleChange(
+                      {
+                        target: { name: "affectedAreaID", value }
+                      },
+                      "initialData"
+                    )
                   }
                   options={formData.initialData.affectedArea}
                 />
@@ -231,9 +266,12 @@ const PatientRecord = props => {
                   name="isStafNotified"
                   checked={formData.initialData.isStafNotified}
                   handleChange={value =>
-                    onInitialDataChange({
-                      target: { name: "isStafNotified", value }
-                    })
+                    handleChange(
+                      {
+                        target: { name: "isStafNotified", value }
+                      },
+                      "initialData"
+                    )
                   }
                 />
               </Form>
@@ -248,10 +286,10 @@ const PatientRecord = props => {
                   title="48 Hour Tracker"
                   subTitle="should show up after 48 hours"
                 />
-                <DatePickerInput
+                <DataPickerInput
                   label="Check in Date"
                   handleChange={(e, value) =>
-                    onHourDateChange("checkInDate", e, value)
+                    onDateChange("checkInDate", e, value, "HourTracker")
                   }
                 />
                 <CustomSelectInput
@@ -259,22 +297,28 @@ const PatientRecord = props => {
                   name="statusID"
                   value={formData.HourTracker.statusID}
                   onChange={value =>
-                    onHourDataChange({
-                      target: { name: "statusID", value }
-                    })
+                    handleChange(
+                      {
+                        target: { name: "statusID", value }
+                      },
+                      "HourTracker"
+                    )
                   }
                   options={formData.HourTracker.status}
                 />
-                {formData.HourTracker.StatusID !== "Return to school" && (
+                {formData.HourTracker.statusID !== "Return to school" && (
                   <CustomSelectInput
                     label="Symptoms"
                     name="symptomsID"
                     mode="multiple"
                     value={formData.HourTracker.symptomsID}
                     onChange={value =>
-                      onHourDataChange({
-                        target: { name: "symptomsID", value }
-                      })
+                      handleChange(
+                        {
+                          target: { name: "symptomsID", value }
+                        },
+                        "HourTracker"
+                      )
                     }
                     options={formData.HourTracker.symptoms}
                   />
@@ -284,9 +328,12 @@ const PatientRecord = props => {
                   name="changeRemoteID"
                   value={formData.HourTracker.changeRemoteID}
                   onChange={value =>
-                    onHourDataChange({
-                      target: { name: "changeRemoteID", value }
-                    })
+                    handleChange(
+                      {
+                        target: { name: "changeRemoteID", value }
+                      },
+                      "HourTracker"
+                    )
                   }
                   options={formData.HourTracker.changeRemote}
                 />
@@ -295,9 +342,12 @@ const PatientRecord = props => {
                   name="teacherNotifiedID"
                   value={formData.HourTracker.teacherNotifiedID}
                   onChange={value =>
-                    onHourDataChange({
-                      target: { name: "teacherNotifiedID", value }
-                    })
+                    handleChange(
+                      {
+                        target: { name: "teacherNotifiedID", value }
+                      },
+                      "HourTracker"
+                    )
                   }
                   options={formData.HourTracker.teacherNotified}
                 />
@@ -306,9 +356,12 @@ const PatientRecord = props => {
                   name="sisChangeConductedID"
                   value={formData.HourTracker.sisChangeConductedID}
                   onChange={value =>
-                    onHourDataChange({
-                      target: { name: "sisChangeConductedID", value }
-                    })
+                    handleChange(
+                      {
+                        target: { name: "sisChangeConductedID", value }
+                      },
+                      "HourTracker"
+                    )
                   }
                   options={formData.HourTracker.sisChangeConducted}
                 />
@@ -317,21 +370,37 @@ const PatientRecord = props => {
                   name="handoutProvidedID"
                   value={formData.HourTracker.handoutProvidedID}
                   onChange={value =>
-                    onHourDataChange({
-                      target: { name: "handoutProvidedID", value }
-                    })
+                    handleChange(
+                      {
+                        target: { name: "handoutProvidedID", value }
+                      },
+                      "HourTracker"
+                    )
                   }
                   options={formData.HourTracker.handoutProvided}
                 />
-                <DatePickerInput
+                <DataPickerInput
                   label="Check in Date/Covid"
                   handleChange={(e, value) =>
-                    onHourDateChange("covidDate", e, value)
+                    onDateChange("covidDate", e, value, "HourTracker")
                   }
+                  options={formData.HourTracker.currentStatus}
                 />
-                <Form.Item label="Current Stutus">
-                  <Input />
-                </Form.Item>
+                <CustomSelectInput
+                  label="Current Stutus"
+                  name="currentStatusID"
+                  mode="multiple"
+                  value={formData.HourTracker.currentStatusID}
+                  onChange={value =>
+                    handleChange(
+                      {
+                        target: { name: "currentStatusID", value }
+                      },
+                      "HourTracker"
+                    )
+                  }
+                  options={formData.HourTracker.currentStatus}
+                />
               </Form>
             </Col>
             <Col md={8} style={{ padding: 10 }}>
@@ -344,16 +413,21 @@ const PatientRecord = props => {
                   title="Return Tracker"
                   subTitle="should show up after 14 Days"
                 />
-                <DatePickerInput
+                <DataPickerInput
                   label="Check in Date"
                   handleChange={(e, value) =>
-                    onReturnTrackerChange("checkInDate", e, value)
+                    onDateChange("checkInDate", e, value, "ReturnTracker")
                   }
                 />
-                <DatePickerInput
+                <DataPickerInput
                   label="Anticipated Return Date"
                   handleChange={(e, value) =>
-                    onReturnTrackerChange("anticipatedReturnDate", e, value)
+                    onDateChange(
+                      "anticipatedReturnDate",
+                      e,
+                      value,
+                      "ReturnTracker"
+                    )
                   }
                 />
                 <CustomSelectInput
@@ -361,9 +435,12 @@ const PatientRecord = props => {
                   name="teacherNotifiedReturnID"
                   value={formData.ReturnTracker.teacherNotifiedReturnID}
                   onChange={value =>
-                    onReturnDateChange({
-                      target: { name: "teacherNotifiedReturnID", value }
-                    })
+                    handleChange(
+                      {
+                        target: { name: "teacherNotifiedReturnID", value }
+                      },
+                      "ReturnTracker"
+                    )
                   }
                   options={formData.ReturnTracker.teacherNotifiedReturn}
                 />
@@ -372,9 +449,12 @@ const PatientRecord = props => {
                   name="teacherNotifiedReturnDateID"
                   value={formData.ReturnTracker.teacherNotifiedReturnDateID}
                   onChange={value =>
-                    onReturnDateChange({
-                      target: { name: "teacherNotifiedReturnDateID", value }
-                    })
+                    handleChange(
+                      {
+                        target: { name: "teacherNotifiedReturnDateID", value }
+                      },
+                      "ReturnTracker"
+                    )
                   }
                   options={formData.ReturnTracker.teacherNotifiedReturnDate}
                 />
@@ -383,19 +463,23 @@ const PatientRecord = props => {
                   name="studentNegativeCovidTestID"
                   value={formData.ReturnTracker.studentNegativeCovidTestID}
                   onChange={value =>
-                    onReturnDateChange({
-                      target: { name: "studentNegativeCovidTestID", value }
-                    })
+                    handleChange(
+                      {
+                        target: { name: "studentNegativeCovidTestID", value }
+                      },
+                      "ReturnTracker"
+                    )
                   }
                   options={formData.ReturnTracker.studentNegativeCovidTest}
                 />
-                <DatePickerInput
+                <DataPickerInput
                   label="Date Student Negative Covid Test"
                   handleChange={(e, value) =>
-                    onReturnTrackerChange(
+                    onDateChange(
                       "studentNegativeCovidTestDate",
                       e,
-                      value
+                      value,
+                      "ReturnTracker"
                     )
                   }
                 />
@@ -404,19 +488,23 @@ const PatientRecord = props => {
                   name="studentReturnID"
                   value={formData.ReturnTracker.studentReturnID}
                   onChange={value =>
-                    onReturnDateChange({
-                      target: { name: "studentReturnID", value }
-                    })
+                    handleChange(
+                      {
+                        target: { name: "studentReturnID", value }
+                      },
+                      "ReturnTracker"
+                    )
                   }
                   options={formData.ReturnTracker.studentReturn}
                 />
-                <DatePickerInput
+                <DataPickerInput
                   label="Date of Student Return"
                   handleChange={(e, value) =>
-                    onReturnTrackerChange(
+                    onDateChange(
                       "studentNegativeCovidTestDate",
                       e,
-                      value
+                      value,
+                      "ReturnTracker"
                     )
                   }
                 />
@@ -425,9 +513,12 @@ const PatientRecord = props => {
                   name="studentChangeSisID"
                   value={formData.ReturnTracker.studentChangeSisID}
                   onChange={value =>
-                    onReturnDateChange({
-                      target: { name: "studentChangeSisID", value }
-                    })
+                    handleChange(
+                      {
+                        target: { name: "studentChangeSisID", value }
+                      },
+                      "ReturnTracker"
+                    )
                   }
                   options={formData.ReturnTracker.studentChangeSis}
                 />
@@ -437,9 +528,12 @@ const PatientRecord = props => {
                   name="currentSymptomsID"
                   value={formData.ReturnTracker.currentSymptomsID}
                   onChange={value =>
-                    onReturnDateChange({
-                      target: { name: "currentSymptomsID", value }
-                    })
+                    handleChange(
+                      {
+                        target: { name: "currentSymptomsID", value }
+                      },
+                      "ReturnTracker"
+                    )
                   }
                   options={formData.ReturnTracker.currentSymptoms}
                 />
@@ -449,10 +543,11 @@ const PatientRecord = props => {
         </Content>
         <div className="mt-20 container-fluid">
           <Table
+            rowKey={record => record.number}
             rowClassName={(record, index) =>
               index % 2 === 0 ? "table-row-dark" : "table-row-light"
             }
-            dataSource={data1}
+            dataSource={updateData}
             columns={columns1}
             pagination={{ pageSize: "20" }}
             scroll={{ x: 1000 }}

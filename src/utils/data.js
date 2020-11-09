@@ -32,7 +32,7 @@ export const data = [
     cohort: "1",
     teacher: "t",
     current_status: "Tracked",
-    date_started: "11-10-ID_20",
+    date_started: "11-10-20",
     status: "yes"
   },
   {
@@ -108,7 +108,7 @@ export const data = [
     status: "yes"
   } // eslint-disable-line
 ];
-export const data1 = [
+export const updateData = [
   {
     number: "1",
     name: "john",
@@ -116,47 +116,47 @@ export const data1 = [
     date_tracked: "10-10-20",
     date_notified: "10-10-20",
     date_of_contact: "10-10-20",
-    s_o_covid: "returned",
+    s_o_covid: ["wdwd", "rew"],
     status: "yes"
   },
   {
-    number: "1",
+    number: "2",
     name: "john",
     post: "Teacher",
     date_tracked: "10-10-20",
     date_notified: "10-10-20",
     date_of_contact: "10-10-20",
-    s_o_covid: "returned",
+    s_o_covid: ["wdwd", "rew"],
     status: "yes"
   },
   {
-    number: "1",
+    number: "3",
     name: "robin",
     post: "Teacher",
     date_tracked: "10-10-20",
     date_notified: "10-10-20",
     date_of_contact: "10-10-20",
-    s_o_covid: "returned",
+    s_o_covid: ["wdwd", "rew"],
     status: "yes"
   },
   {
-    number: "1",
+    number: "4",
     name: "robin",
     post: "Teacher",
     date_tracked: "10-10-20",
     date_notified: "10-10-20",
     date_of_contact: "10-10-20",
-    s_o_covid: "returned",
+    s_o_covid: ["wdwd", "rew"],
     status: "yes"
   },
   {
-    number: "1",
+    number: "5",
     name: "robin",
     post: "Teacher",
     date_tracked: "10-10-20",
     date_notified: "10-10-20",
     date_of_contact: "10-10-20",
-    s_o_covid: "returned",
+    s_o_covid: ["wdwd", "rew"],
     status: "yes"
   } // eslint-disable-line
 ];
@@ -167,7 +167,7 @@ export const data3 = {
     lastName: "",
     firstName: "",
     grade: ["1", "2", "4"],
-    teacher: ["wqwq", "wqwq", "wwwq"],
+    teacher: ["amit", "sad", "dwwf"],
     isHome: true,
     PG: true,
     date: "",
@@ -186,18 +186,20 @@ export const data3 = {
   HourTracker: {
     checkInDate: "",
     status: ["Return to school", "Remote  Quarantine"],
-    symptoms: ["ew", "ewew", "ewew"],
-    changeRemote: ["ew", "ewew", "ewew"],
-    teacherNotified: ["ew", "ewew", "ewew"],
-    sisChangeConducted: ["ew", "ewew", "ewew"],
-    handoutProvided: ["ew", "ewew", "ewew"],
+    symptoms: ["ew", "ewew", "ewewdd"],
+    changeRemote: ["ew", "leefe", "ewew"],
+    teacherNotified: ["ew", "eurebd", "ewew"],
+    sisChangeConducted: ["ew", "fsjj", "ewew"],
+    handoutProvided: ["ew", "sfdg", "ewew"],
+    currentStutus: ["def", "Fefe"],
     covidDate: "",
-    currentStatus: "",
+    currentStatus: ["Dsd", "dsds"],
     statusID: "",
     symptomsID: [],
     changeRemoteID: "",
     teacherNotifiedID: "",
     sisChangeConductedID: "",
+    currentStatusID: [],
     handoutProvidedID: ""
   },
   ReturnTracker: {
@@ -205,9 +207,9 @@ export const data3 = {
     anticipatedReturnDate: "",
     teacherNotifiedReturn: ["re", "Rere", "Rer"],
     teacherNotifiedReturnDate: ["ss", "dwd", "dww"],
-    studentNegativeCovidTest: ["Re", "Rere", "Re"],
+    studentNegativeCovidTest: ["Re", "Rere", "wergf"],
     studentNegativeCovidTestDate: "",
-    studentReturn: ["Ee", "Rere", "Rere"],
+    studentReturn: ["Ee", "Rere", "sfde"],
     studentChangeSis: ["dsd", "Dsds", "sd"],
     studentReturnDate: "",
     currentSymptoms: ["ewew", "ew", "Ee", "we"],

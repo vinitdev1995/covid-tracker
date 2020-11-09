@@ -1,5 +1,6 @@
+@import "./src/common/styles/variables";
 .ant-form-item-label {
-  color: midnightblue !important;
+  color: darkblue !important;
 }
 .ant-form-item-control-input {
   outline: 0 !important;
@@ -20,7 +21,7 @@
   box-shadow: none !important;
 }
 .ant-form-item-label{
-  white-space: unset !important
+  white-space: initial !important
 }
 .ant-form-item-label > label::after{
   margin: 0px 8px 0px 8px !important;
@@ -48,14 +49,16 @@
   outline: 0 !important;
   -webkit-box-shadow: none !important;
   box-shadow: none !important;
-  width:285px !important;
+  //width:285px !important;
 }
 
 .ant-page-header-heading-title.ant-page-header-heading-title {
-  color: midnightblue;
+  white-space: unset !important;
+  color: darkblue;
 }
 .ant-page-header-heading-sub-title.ant-page-header-heading-sub-title {
-  color: midnightblue;
+  white-space: initial !important;
+  color: darkblue;
 }
 
 .table-row-light {
@@ -65,6 +68,36 @@
   background-color: #f2f2f2;
 }
 
+.ant-row .ant-form-item {
+  margin-block-end: auto;
+}
 th{
-  background-color: steelblue!important;
+  background-color: $color_darkGreen!important;
+}
+
+@media screen   and (min-device-width: 1200px)
+and (max-device-width: 1600px)
+and (-webkit-min-device-pixel-ratio: 1) {
+  .ant-picker {
+    width: 285px !important;
+  }
+}
+
+@media screen and (max-width: 480px) and (max-width: 600px){
+  .ant-picker {
+    width: 350px !important;
+  }
+
+@media only screen and
+(min-device-width: 768px)
+and (max-device-width: 1024px)
+and (-webkit-min-device-pixel-ratio: 1) {
+  .ant-picker {
+    width: 160px !important;
+  }
+}
+
+
+
+
 }
