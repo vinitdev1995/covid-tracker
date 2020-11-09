@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Select } from "antd";
 export const CustomSelectInput = props => {
-  const { label, value, onChange, name, options, mode } = props;
+  const { label, value, onChange, name, options, mode, error } = props;
   return (
     <Form.Item label={label}>
       <Select name={name} value={value} onChange={onChange} mode={mode || ""}>
@@ -11,6 +11,7 @@ export const CustomSelectInput = props => {
           </Select.Option>
         ))}
       </Select>
+      <span className="text-danger">{error}</span>
     </Form.Item>
   );
 };

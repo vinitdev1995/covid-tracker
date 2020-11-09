@@ -219,5 +219,44 @@ export const data3 = {
     studentNegativeCovidTestID: "",
     studentReturnID: "",
     studentChangeSisID: ""
+  },
+  error: {
+    initialDataError: {
+      selectSymptomsID: "",
+      studentID: "",
+      teacherID: "",
+      caseNumber: "",
+      lastName: "",
+      firstName: "",
+      date: "",
+      reference: "",
+      gradeId: "",
+      studentGrade: "",
+      tempratureID: "",
+      affectedAreaID: ""
+    },
+    hourTrackerError: {
+      covidDate: "",
+      currentStatus: "",
+      statusID: "",
+      symptomsID: "",
+      changeRemoteID: "",
+      teacherNotifiedID: "",
+      sisChangeConductedID: "",
+      handoutProvidedID: "",
+      currentStatusID: ""
+    },
+    returnTrackerError: {
+      checkInDate: "",
+      anticipatedReturnDate: "",
+      studentNegativeCovidTestDate: "",
+      studentReturnDate: "",
+      teacherNotifiedReturnDateID: "",
+      teacherNotifiedReturnID: "",
+      studentNegativeCovidTestID: "",
+      studentReturnID: "",
+      studentChangeSisID: "",
+      currentSymptomsID: ""
+    }
   }
 };

@@ -6,6 +6,7 @@ import moment from "moment";
 import { updateData, data3 } from "../../utils/data";
 import { CustomSwitchInput } from "../../common/components/SwitchInput";
 import { DataPickerInput } from "../../common/components/DataPickerInput";
+import { Validation } from "../../common/components/Validation";
 import "./patient-record.scss";
 import { Form, Row, Layout, PageHeader, Col, Table } from "antd";
 const { Content } = Layout;
@@ -81,33 +82,58 @@ const PatientRecord = () => {
     setFormData(prev => ({ ...prev, [type]: changeData }));
   };
 
-  // const onHourDateChange = (type, date, dateString) => {
-  //   const HourTracker = formData.HourTracker;
-  //   HourTracker[type] = dateString;
-  //   const data1 = { ...formData, HourTracker };
-  //   setFormData(data1);
-  // };
+  const submit = () => {
+    const initialDataAllError = {};
+    const HourTrackerAllError = {};
+    const ReturnTrackerAllError = {};
+    Object.keys(formData.initialData).forEach(key => {
+      const error = Validation(key, formData.initialData[key]);
+      if (error) {
+        initialDataAllError[key] = error;
+      }
+    });
 
-  // const onHourDataChange = e => {
-  //   const HourTracker = formData.HourTracker;
-  //   HourTracker[e.target.name] = e.target.value;
-  //   const data1 = { ...formData, HourTracker };
-  //   setFormData(data1);
-  // };
+    Object.keys(formData.HourTracker).forEach(key => {
+      const error = Validation(key, formData.HourTracker[key]);
+      if (error) {
+        HourTrackerAllError[key] = error;
+      }
+    });
+    Object.keys(formData.ReturnTracker).forEach(key => {
+      const error = Validation(key, formData.ReturnTracker[key]);
+      if (error) {
+        ReturnTrackerAllError[key] = error;
+      }
+    });
+    if (
+      Object.keys(
+        initialDataAllError || ReturnTrackerAllError || HourTrackerAllError
+      ).length
+    ) {
+      setFormData(prev => ({
+        ...prev,
+        error: {
+          initialDataError: {
+            ...initialDataAllError
+          },
+          hourTrackerError: {
+            ...HourTrackerAllError
+          },
+          returnTrackerError: {
+            ...ReturnTrackerAllError
+          }
+        }
+      }));
+    }
+  };
+  const initialDataError =
+    (formData && formData.error && formData.error.initialDataError) || "";
 
-  // const onReturnTrackerChange = (type, date, dateString) => {
-  //   const ReturnTracker = formData.ReturnTracker;
-  //   ReturnTracker[type] = dateString;
-  //   const data1 = { ...formData, ReturnTracker };
-  //   setFormData(data1);
-  // };
+  const hourTrackerError =
+    (formData && formData.error && formData.error.hourTrackerError) || "";
 
-  // const onReturnDateChange = e => {
-  //   const ReturnTracker = formData.ReturnTracker;
-  //   ReturnTracker[e.target.name] = e.target.value;
-  //   const data1 = { ...formData, ReturnTracker };
-  //   setFormData(data1);
-  // };
+  const returnTrackerError =
+    (formData && formData.error && formData.error.returnTrackerError) || "";
 
   return (
     <div>
@@ -128,12 +154,14 @@ const PatientRecord = () => {
                   label="Case Number"
                   name="caseNumber"
                   value={formData.initialData.caseNumber}
+                  error={initialDataError.caseNumber || ""}
                   onChange={e => handleChange(e, "initialData")}
                 />
                 <CustomSelectInput
                   label="Student ID"
                   name="studentID"
                   value={formData.initialData.studentID || []}
+                  error={initialDataError.studentID || ""}
                   onChange={value =>
                     handleChange(
                       {
@@ -149,18 +177,21 @@ const PatientRecord = () => {
                   label="Student Last Name"
                   name="lastName"
                   value={formData.initialData.lastName}
+                  error={initialDataError.lastName || ""}
                   onChange={e => handleChange(e, "initialData")}
                 />
                 <CustomInput
                   label="Student First Name"
                   name="firstName"
                   value={formData.initialData.firstName}
+                  error={initialDataError.firstName || ""}
                   onChange={e => handleChange(e, "initialData")}
                 />
                 <CustomSelectInput
                   label="Student Grade"
                   name="gradeID"
                   value={formData.initialData.gradeID}
+                  error={initialDataError.gradeID || ""}
                   onChange={value =>
                     handleChange(
                       { target: { name: "gradeID", value } },
@@ -173,6 +204,7 @@ const PatientRecord = () => {
                   label="Teacher"
                   name="teacherID"
                   value={formData.initialData.teacherID}
+                  error={initialDataError.teacherID || ""}
                   onChange={value =>
                     handleChange(
                       {
@@ -207,6 +239,7 @@ const PatientRecord = () => {
                 />
                 <DataPickerInput
                   label="Date student was last in buildings"
+                  error={initialDataError.date || ""}
                   handleChange={(e, value) =>
                     onDateChange("Date", e, value, "initialData")
                   }
@@ -215,13 +248,14 @@ const PatientRecord = () => {
                   label="Reference"
                   name="reference"
                   value={formData.initialData.reference}
-                  o
+                  error={initialDataError.reference || ""}
                   onChange={e => handleChange(e, "initialData")}
                 />
                 <CustomSelectInput
-                  label="Selecte Stymptoms"
+                  label="Select Stymptoms"
                   mode="multiple"
                   name="selectSymptomsID"
+                  error={initialDataError.selectSymptomsID || ""}
                   value={formData.initialData.selectSymptomsID}
                   onChange={value =>
                     handleChange(
@@ -236,6 +270,7 @@ const PatientRecord = () => {
                 <CustomSelectInput
                   label="Temprature"
                   name="tempratureID"
+                  error={initialDataError.tempratureID || ""}
                   value={formData.initialData.tempratureID}
                   onChange={value =>
                     handleChange(
@@ -251,6 +286,7 @@ const PatientRecord = () => {
                   label="Effected areas in the buildings"
                   name="affectedAreaID"
                   value={formData.initialData.affectedAreaID}
+                  error={initialDataError.affectedAreaID || ""}
                   onChange={value =>
                     handleChange(
                       {
@@ -288,6 +324,7 @@ const PatientRecord = () => {
                 />
                 <DataPickerInput
                   label="Check in Date"
+                  error={hourTrackerError.covidDate || ""}
                   handleChange={(e, value) =>
                     onDateChange("checkInDate", e, value, "HourTracker")
                   }
@@ -295,6 +332,7 @@ const PatientRecord = () => {
                 <CustomSelectInput
                   label="Status"
                   name="statusID"
+                  error={hourTrackerError.statusID || ""}
                   value={formData.HourTracker.statusID}
                   onChange={value =>
                     handleChange(
@@ -311,6 +349,7 @@ const PatientRecord = () => {
                     label="Symptoms"
                     name="symptomsID"
                     mode="multiple"
+                    error={hourTrackerError.symptomsID || ""}
                     value={formData.HourTracker.symptomsID}
                     onChange={value =>
                       handleChange(
@@ -326,6 +365,7 @@ const PatientRecord = () => {
                 <CustomSelectInput
                   label="Student Change in Remote"
                   name="changeRemoteID"
+                  error={hourTrackerError.changeRemoteID || ""}
                   value={formData.HourTracker.changeRemoteID}
                   onChange={value =>
                     handleChange(
@@ -340,6 +380,7 @@ const PatientRecord = () => {
                 <CustomSelectInput
                   label="Teacher Notified"
                   name="teacherNotifiedID"
+                  error={hourTrackerError.teacherNotifiedID || ""}
                   value={formData.HourTracker.teacherNotifiedID}
                   onChange={value =>
                     handleChange(
@@ -354,6 +395,7 @@ const PatientRecord = () => {
                 <CustomSelectInput
                   label="Sis Change Conducted"
                   name="sisChangeConductedID"
+                  error={hourTrackerError.sisChangeConductedID || ""}
                   value={formData.HourTracker.sisChangeConductedID}
                   onChange={value =>
                     handleChange(
@@ -366,8 +408,9 @@ const PatientRecord = () => {
                   options={formData.HourTracker.sisChangeConducted}
                 />
                 <CustomSelectInput
-                  label="andout Provided"
+                  label="Handout Provided"
                   name="handoutProvidedID"
+                  error={hourTrackerError.handoutProvidedID || ""}
                   value={formData.HourTracker.handoutProvidedID}
                   onChange={value =>
                     handleChange(
@@ -381,6 +424,7 @@ const PatientRecord = () => {
                 />
                 <DataPickerInput
                   label="Check in Date/Covid"
+                  error={hourTrackerError.covidDate || ""}
                   handleChange={(e, value) =>
                     onDateChange("covidDate", e, value, "HourTracker")
                   }
@@ -390,6 +434,7 @@ const PatientRecord = () => {
                   label="Current Stutus"
                   name="currentStatusID"
                   mode="multiple"
+                  error={hourTrackerError.currentStatusID || ""}
                   value={formData.HourTracker.currentStatusID}
                   onChange={value =>
                     handleChange(
@@ -415,12 +460,14 @@ const PatientRecord = () => {
                 />
                 <DataPickerInput
                   label="Check in Date"
+                  error={returnTrackerError.checkInDate || ""}
                   handleChange={(e, value) =>
                     onDateChange("checkInDate", e, value, "ReturnTracker")
                   }
                 />
                 <DataPickerInput
                   label="Anticipated Return Date"
+                  error={returnTrackerError.anticipatedReturnDate || ""}
                   handleChange={(e, value) =>
                     onDateChange(
                       "anticipatedReturnDate",
@@ -433,6 +480,7 @@ const PatientRecord = () => {
                 <CustomSelectInput
                   label="Teacher Notified of Return"
                   name="teacherNotifiedReturnID"
+                  error={returnTrackerError.teacherNotifiedReturnID || ""}
                   value={formData.ReturnTracker.teacherNotifiedReturnID}
                   onChange={value =>
                     handleChange(
@@ -447,6 +495,7 @@ const PatientRecord = () => {
                 <CustomSelectInput
                   label="Teacher Notified of Return Date"
                   name="teacherNotifiedReturnDateID"
+                  error={returnTrackerError.teacherNotifiedReturnDateID || ""}
                   value={formData.ReturnTracker.teacherNotifiedReturnDateID}
                   onChange={value =>
                     handleChange(
@@ -461,6 +510,7 @@ const PatientRecord = () => {
                 <CustomSelectInput
                   label="Student Nagetive Covid Test"
                   name="studentNegativeCovidTestID"
+                  error={returnTrackerError.studentNegativeCovidTestID || ""}
                   value={formData.ReturnTracker.studentNegativeCovidTestID}
                   onChange={value =>
                     handleChange(
@@ -474,6 +524,7 @@ const PatientRecord = () => {
                 />
                 <DataPickerInput
                   label="Date Student Negative Covid Test"
+                  error={returnTrackerError.studentNegativeCovidTestDate || ""}
                   handleChange={(e, value) =>
                     onDateChange(
                       "studentNegativeCovidTestDate",
@@ -486,6 +537,7 @@ const PatientRecord = () => {
                 <CustomSelectInput
                   label="Student Return"
                   name="studentReturnID"
+                  error={returnTrackerError.studentReturnID || ""}
                   value={formData.ReturnTracker.studentReturnID}
                   onChange={value =>
                     handleChange(
@@ -499,6 +551,7 @@ const PatientRecord = () => {
                 />
                 <DataPickerInput
                   label="Date of Student Return"
+                  error={returnTrackerError.studentNegativeCovidTestDate || ""}
                   handleChange={(e, value) =>
                     onDateChange(
                       "studentNegativeCovidTestDate",
@@ -511,6 +564,7 @@ const PatientRecord = () => {
                 <CustomSelectInput
                   label="Student Change to in-person in SIS"
                   name="studentChangeSisID"
+                  error={returnTrackerError.studentChangeSisID || ""}
                   value={formData.ReturnTracker.studentChangeSisID}
                   onChange={value =>
                     handleChange(
@@ -526,6 +580,7 @@ const PatientRecord = () => {
                   label="Current Symptoms"
                   mode="multiple"
                   name="currentSymptomsID"
+                  error={returnTrackerError.currentSymptomsID || ""}
                   value={formData.ReturnTracker.currentSymptomsID}
                   onChange={value =>
                     handleChange(
@@ -541,6 +596,15 @@ const PatientRecord = () => {
             </Col>
           </Row>
         </Content>
+        <div style={{ margin: 15 }}>
+          <button
+            type="primary"
+            style={{ width: 180, background: "#005677" }}
+            onClick={submit}
+          >
+            Submit
+          </button>
+        </div>
         <div className="mt-20 container-fluid">
           <Table
             rowKey={record => record.number}

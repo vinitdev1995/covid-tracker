@@ -75,29 +75,6 @@ th{
   background-color: $color_darkGreen!important;
 }
 
-@media screen   and (min-device-width: 1200px)
-and (max-device-width: 1600px)
-and (-webkit-min-device-pixel-ratio: 1) {
-  .ant-picker {
-    width: 285px !important;
-  }
-}
-
-@media screen and (max-width: 480px) and (max-width: 600px){
-  .ant-picker {
-    width: 350px !important;
-  }
-
-@media only screen and
-(min-device-width: 768px)
-and (max-device-width: 1024px)
-and (-webkit-min-device-pixel-ratio: 1) {
-  .ant-picker {
-    width: 160px !important;
-  }
-}
-
-
-
-
+.ant-picker {
+  width: 100%;
 }
