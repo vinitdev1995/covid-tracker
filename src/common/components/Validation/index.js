@@ -129,67 +129,67 @@ export const Validation = (name, value) => {
       }
     case "sisChangeConductedID":
       if (!value) {
-        return "Sis Change Conducted is require";
+        return "Sis Change Conducted is required";
       } else {
         return null;
       }
     case "handoutProvided":
       if (!value) {
-        return "Handout Provided is require";
+        return "Handout Provided is required";
       } else {
         return null;
       }
     case "anticipatedReturnDate":
       if (!value) {
-        return "Anticipated Return Date is require";
+        return "Anticipated Return Date is required";
       } else {
         return null;
       }
     case "studentNegativeCovidTestDate":
       if (!value) {
-        return "Student Negative Covid Test Date is require";
+        return "Student Negative Covid Test Date is required";
       } else {
         return null;
       }
     case "studentReturnDate":
       if (!value) {
-        return "StudentReturnDate is require";
+        return "StudentReturnDate is required";
       } else {
         return null;
       }
     case "teacherNotifiedReturnDateID":
       if (!value) {
-        return "Teacher Notified Return Date is require";
+        return "Teacher Notified Return Date is required";
       } else {
         return null;
       }
     case "teacherNotifiedReturnID":
       if (!value) {
-        return "Teacher Notified Return is require";
+        return "Teacher Notified Return is required";
       } else {
         return null;
       }
     case "studentNegativeCovidTestID":
       if (!value) {
-        return "Student Negative Covid Test is require";
+        return "Student Negative Covid Test is required";
       } else {
         return null;
       }
     case "studentReturnID":
       if (!value) {
-        return "Student Return is require";
+        return "Student Return is required";
       } else {
         return null;
       }
     case "studentChangeSisID":
       if (!value) {
-        return "Student Change Sis is require";
+        return "Student Change Sis is required";
       } else {
         return null;
       }
     case "currentSymptomsID":
       if (!value.length) {
-        return "Current Symptoms is require";
+        return "Current Symptoms is required";
       } else {
         return null;
       }
