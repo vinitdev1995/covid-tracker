@@ -236,7 +236,7 @@ export const data3 = {
       affectedAreaID: ""
     },
     hourTrackerError: {
-      covidDate: "",
+      checkInDate: "",
       currentStatus: "",
       statusID: "",
       symptomsID: "",

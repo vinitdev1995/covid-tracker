@@ -8,7 +8,7 @@ export const Validation = (name, value) => {
       }
     case "lastName":
       if (!value) {
-        return "Student Last Name from is required";
+        return "Student Last Name is required";
       } else {
         return null;
       }
@@ -153,7 +153,7 @@ export const Validation = (name, value) => {
       }
     case "studentReturnDate":
       if (!value) {
-        return "StudentReturnDate is required";
+        return "Student Return Date is required";
       } else {
         return null;
       }

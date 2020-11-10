@@ -241,7 +241,7 @@ const PatientRecord = () => {
                   label="Date student was last in buildings"
                   error={initialDataError.date || ""}
                   handleChange={(e, value) =>
-                    onDateChange("Date", e, value, "initialData")
+                    onDateChange("date", e, value, "initialData")
                   }
                 />
                 <CustomInput
@@ -324,7 +324,7 @@ const PatientRecord = () => {
                 />
                 <DataPickerInput
                   label="Check in Date"
-                  error={hourTrackerError.covidDate || ""}
+                  error={hourTrackerError.checkInDate || ""}
                   handleChange={(e, value) =>
                     onDateChange("checkInDate", e, value, "HourTracker")
                   }
@@ -551,14 +551,9 @@ const PatientRecord = () => {
                 />
                 <DataPickerInput
                   label="Date of Student Return"
-                  error={returnTrackerError.studentNegativeCovidTestDate || ""}
+                  error={returnTrackerError.studentReturnDate || ""}
                   handleChange={(e, value) =>
-                    onDateChange(
-                      "studentNegativeCovidTestDate",
-                      e,
-                      value,
-                      "ReturnTracker"
-                    )
+                    onDateChange("studentReturnDate", e, value, "ReturnTracker")
                   }
                 />
                 <CustomSelectInput
