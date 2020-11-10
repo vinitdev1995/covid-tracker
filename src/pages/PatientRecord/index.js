@@ -596,7 +596,10 @@ const PatientRecord = () => {
             </Col>
           </Row>
         </Content>
-        <div style={{ margin: 15 }}>
+        <div
+          style={{ margin: 15 }}
+          className="d-flex flex-row justify-content-end"
+        >
           <button
             type="primary"
             style={{ width: 180, background: "#005677" }}
