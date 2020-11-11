@@ -116,7 +116,7 @@ export const updateData = [
     date_tracked: "10-10-20",
     date_notified: "10-10-20",
     date_of_contact: "10-10-20",
-    s_o_covid: ["wdwd", "rew"],
+    s_o_covid: ["select1", "select2"],
     status: "yes"
   },
   {
@@ -126,7 +126,7 @@ export const updateData = [
     date_tracked: "10-10-20",
     date_notified: "10-10-20",
     date_of_contact: "10-10-20",
-    s_o_covid: ["wdwd", "rew"],
+    s_o_covid: ["select1", "select2"],
     status: "yes"
   },
   {
@@ -136,7 +136,7 @@ export const updateData = [
     date_tracked: "10-10-20",
     date_notified: "10-10-20",
     date_of_contact: "10-10-20",
-    s_o_covid: ["wdwd", "rew"],
+    s_o_covid: ["select1", "select2"],
     status: "yes"
   },
   {
@@ -146,7 +146,7 @@ export const updateData = [
     date_tracked: "10-10-20",
     date_notified: "10-10-20",
     date_of_contact: "10-10-20",
-    s_o_covid: ["wdwd", "rew"],
+    s_o_covid: ["select1", "select2"],
     status: "yes"
   },
   {
@@ -156,7 +156,7 @@ export const updateData = [
     date_tracked: "10-10-20",
     date_notified: "10-10-20",
     date_of_contact: "10-10-20",
-    s_o_covid: ["wdwd", "rew"],
+    s_o_covid: ["select1", "select2", "select3", "select4"],
     status: "yes"
   } // eslint-disable-line
 ];

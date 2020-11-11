@@ -16,12 +16,14 @@ const PatientRecord = () => {
     {
       title: "Number",
       key: "number",
-      dataIndex: "number"
+      dataIndex: "number",
+      render: text => <a>{text}</a>
     },
     {
       title: "Name",
       dataIndex: "name",
-      key: "name"
+      key: "name",
+      render: text => <a>{text}</a>
     },
     {
       title: "Student / Teacher / Staff",
@@ -50,7 +52,9 @@ const PatientRecord = () => {
       render: symptoms => (
         <>
           {symptoms.map((symptom, index) => {
-            return <span key={index}>{symptom} </span>;
+            const value =
+              symptoms.length !== index + 1 ? `${symptom}" "` : symptom;
+            return <span key={index}>{value.replace(/" "/g, ",")} </span>;
           })}
         </>
       )
@@ -230,6 +234,7 @@ const PatientRecord = () => {
                   label="Nurse execused following P/G Contact"
                   name="PG"
                   checked={formData.initialData.PG}
+                  isLabelPadding={true}
                   handleChange={value =>
                     handleChange(
                       { target: { name: "PG", value } },
@@ -238,7 +243,7 @@ const PatientRecord = () => {
                   }
                 />
                 <DataPickerInput
-                  label="Date student was last in buildings"
+                  label="Date student was last in building"
                   error={initialDataError.date || ""}
                   handleChange={(e, value) =>
                     onDateChange("date", e, value, "initialData")
@@ -252,7 +257,7 @@ const PatientRecord = () => {
                   onChange={e => handleChange(e, "initialData")}
                 />
                 <CustomSelectInput
-                  label="Select Stymptoms"
+                  label="Select Symptoms"
                   mode="multiple"
                   name="selectSymptomsID"
                   error={initialDataError.selectSymptomsID || ""}
@@ -283,7 +288,7 @@ const PatientRecord = () => {
                   options={formData.initialData.temprature}
                 />
                 <CustomSelectInput
-                  label="Effected areas in the buildings"
+                  label="Affected Areas in the building"
                   name="affectedAreaID"
                   value={formData.initialData.affectedAreaID}
                   error={initialDataError.affectedAreaID || ""}
@@ -298,7 +303,7 @@ const PatientRecord = () => {
                   options={formData.initialData.affectedArea}
                 />
                 <CustomSwitchInput
-                  label="Building staff notified"
+                  label="Building Staff Notified"
                   name="isStafNotified"
                   checked={formData.initialData.isStafNotified}
                   handleChange={value =>
@@ -320,7 +325,7 @@ const PatientRecord = () => {
               >
                 <PageHeader
                   title="48 Hour Tracker"
-                  subTitle="should show up after 48 hours"
+                  subTitle="Should show up after 48 hours"
                 />
                 <DataPickerInput
                   label="Check in Date"
@@ -363,7 +368,7 @@ const PatientRecord = () => {
                   />
                 )}
                 <CustomSelectInput
-                  label="Student Change in Remote"
+                  label="Student Changed to Remote"
                   name="changeRemoteID"
                   error={hourTrackerError.changeRemoteID || ""}
                   value={formData.HourTracker.changeRemoteID}
@@ -393,7 +398,7 @@ const PatientRecord = () => {
                   options={formData.HourTracker.teacherNotified}
                 />
                 <CustomSelectInput
-                  label="Sis Change Conducted"
+                  label="SIS Change conducted"
                   name="sisChangeConductedID"
                   error={hourTrackerError.sisChangeConductedID || ""}
                   value={formData.HourTracker.sisChangeConductedID}
@@ -456,7 +461,7 @@ const PatientRecord = () => {
               >
                 <PageHeader
                   title="Return Tracker"
-                  subTitle="should show up after 14 Days"
+                  subTitle="Should show up after 14 Days"
                 />
                 <DataPickerInput
                   label="Check in Date"
@@ -478,7 +483,7 @@ const PatientRecord = () => {
                   }
                 />
                 <CustomSelectInput
-                  label="Teacher Notified of Return"
+                  label="Teacher Notified of Return?"
                   name="teacherNotifiedReturnID"
                   error={returnTrackerError.teacherNotifiedReturnID || ""}
                   value={formData.ReturnTracker.teacherNotifiedReturnID}
@@ -493,7 +498,7 @@ const PatientRecord = () => {
                   options={formData.ReturnTracker.teacherNotifiedReturn}
                 />
                 <CustomSelectInput
-                  label="Teacher Notified of Return Date"
+                  label="Date Teacher Notified of Return"
                   name="teacherNotifiedReturnDateID"
                   error={returnTrackerError.teacherNotifiedReturnDateID || ""}
                   value={formData.ReturnTracker.teacherNotifiedReturnDateID}
@@ -508,7 +513,7 @@ const PatientRecord = () => {
                   options={formData.ReturnTracker.teacherNotifiedReturnDate}
                 />
                 <CustomSelectInput
-                  label="Student Nagetive Covid Test"
+                  label="Student Negative COVID Test"
                   name="studentNegativeCovidTestID"
                   error={returnTrackerError.studentNegativeCovidTestID || ""}
                   value={formData.ReturnTracker.studentNegativeCovidTestID}
@@ -523,7 +528,7 @@ const PatientRecord = () => {
                   options={formData.ReturnTracker.studentNegativeCovidTest}
                 />
                 <DataPickerInput
-                  label="Date Student Negative Covid Test"
+                  label="Date of Student Negative COVID Test"
                   error={returnTrackerError.studentNegativeCovidTestDate || ""}
                   handleChange={(e, value) =>
                     onDateChange(
@@ -535,7 +540,7 @@ const PatientRecord = () => {
                   }
                 />
                 <CustomSelectInput
-                  label="Student Return"
+                  label="Student Returned?"
                   name="studentReturnID"
                   error={returnTrackerError.studentReturnID || ""}
                   value={formData.ReturnTracker.studentReturnID}
@@ -557,7 +562,7 @@ const PatientRecord = () => {
                   }
                 />
                 <CustomSelectInput
-                  label="Student Change to in-person in SIS"
+                  label="Student changed to in-person in SIS"
                   name="studentChangeSisID"
                   error={returnTrackerError.studentChangeSisID || ""}
                   value={formData.ReturnTracker.studentChangeSisID}

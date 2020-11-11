@@ -78,3 +78,16 @@ th{
 .ant-picker {
   width: 100%;
 }
+
+.label-padding {
+  .ant-form-item-label{
+    padding-bottom: 10px;
+  }
+  .ant-form-item-label > label::after {
+    padding-bottom: 33px;
+  }
+}
+
+a:not([href]):not([class]){
+  text-decoration: underline;
+}

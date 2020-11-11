@@ -45,7 +45,7 @@ export const Validation = (name, value) => {
 
     case "handoutProvidedID":
       if (!value) {
-        return "handoutProvided is required";
+        return "Handout Provided is required";
       } else {
         return null;
       }
@@ -129,7 +129,7 @@ export const Validation = (name, value) => {
       }
     case "sisChangeConductedID":
       if (!value) {
-        return "Sis Change Conducted is required";
+        return "SIS Change Conducted is required";
       } else {
         return null;
       }
